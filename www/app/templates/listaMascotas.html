@@ -1,0 +1,64 @@
+<ion-view>
+  <ion-nav-title>Publicaciones</ion-nav-title>
+  <ion-content padding="true">
+
+    <ion-refresher class="spinner-balanced" on-refresh="reload()"></ion-refresher>
+
+    <div class="text-center">
+      <ion-spinner class="spinner-balanced" ng-show="loading"></ion-spinner>
+    </div>
+
+
+    <div ng-show="!loading">
+    	    <div class="{{layout}} chat-list-wrap">
+      <a class="item item-thumbnail-left" ng-repeat="chat in chats" ui-sref="detailPublicacion({id: chat.id})" style="    min-height: 172px; margin-top: 10px;"> 
+        <img ng-src="{{urlImg}}/{{chat.photo}}" style="border-radius: 5%;    border: none;">
+        <h2 style="color:#FF8600; white-space: pre-line !important">{{chat.nombre}}</h2>
+
+         <p style="color:#444 !important; white-space: pre-line !important;    max-height: 44px;">{{chat.descripcion}}</p>
+       
+
+     <div style="white-space: pre-line;"><img style="    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 0px;" src="img/animal{{chat.id_raza}}.png"> {{chat.edad}}</div>
+
+
+        <h2 style="color:#444 !important;"><img style='  border-radius: 0px;  height: 30px; width: 30px;border: none;vertical-align: middle;margin-right: 5px;' src="img/tipoa{{chat.id_tipoanuncio}}.png"><strong>{{chat.tipoAnuncio}}</strong></h2>
+        <div   style="     background-color: lightcoral;
+    position: absolute;
+    left: 7px;
+    top: 0;
+    margin-top: 131px;
+    width: 100px;
+    max-width: 100px;
+    text-align: center;
+    padding: 2px;
+    border-radius: 2px;
+    color: white;">
+         Hace {{chat.tiempoPublicacion}} dias
+        </div>
+      </a>
+    </div>
+    </div>
+  </ion-content>
+<!--   <ion-footer-bar class="bar-stable">
+    <div class="buttons">
+      <div class="button button-clear" ng-disabled="loading" ng-click="map()">
+        <i class="icon ion-map"></i> Maps
+      </div>
+    </div>
+    <h1 class="title"></h1>
+    <div class="buttons">
+      <div class="button button-clear" ng-disabled="loading" ng-click="report()">
+        Report
+        <i class="icon ion-android-alert"></i>
+      </div>
+    </div>
+  </ion-footer-bar> -->
+</ion-view>
+
+
+
+
+

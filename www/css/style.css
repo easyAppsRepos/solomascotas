@@ -1,0 +1,101 @@
+/* Empty. Add your own CSS if you like */
+
+.grid {
+  display: inline-block;
+  width: 100%; }
+  .grid .item {
+    float: left;
+    width: 50%;
+    padding: 10px; }
+    .grid .item > img {
+      position: relative;
+      top: 0;
+      left: 0;
+      max-height: unset;
+      max-width: 100%; }
+
+.chat-list-wrap .item {
+    margin: 0;
+    padding: 20px 15px 20px 125px;
+    border-top: none;
+    border-right: none;
+    border-bottom: 2px solid #fff;
+    border-left: none;
+    background-color: #f5f5f5;
+    color: #444;
+    border-radius: 3px; }
+  .chat-list-wrap .item img {
+    top: 20px;
+    max-height: 100px;
+    max-width: 100px;
+    height: 100px;
+    width: 100px;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+    border: 5px solid #fff; }
+  .chat-list-wrap .item h2,
+  .chat-list-wrap .item p {
+    margin-bottom: 5px;
+    color: #fff; }
+  .chat-list-wrap .item h2 {
+    font-size: 18px;
+    font-weight: bold; }
+  .chat-list-wrap .item p {
+    font-size: 14px; }
+  .chat-list-wrap .item .btn {
+    /*margin-top: 10px;*/ }
+
+.chat-list-wrap.grid .item {
+  padding: 30px 15px;
+  border: 3px solid #fff;
+  border-left: none;
+  border-bottom: none;
+  text-align: center; }
+  .chat-list-wrap.grid .item:nth-child(2n) {
+    border-right: 0; }
+  .chat-list-wrap.grid .item img {
+    top: 0; }
+
+ion-tabs .tab-nav {
+  height: 60px;
+  background-color: #EFEFEF; }
+  ion-tabs .tab-nav .tab-item,
+  ion-tabs .tab-nav a {
+    color: #1B3255; }
+    ion-tabs .tab-nav .tab-item.tab-item-active, ion-tabs .tab-nav .tab-item.activated,
+    ion-tabs .tab-nav a.tab-item-active,
+    ion-tabs .tab-nav a.activated {
+      color: #1B3255; }
+    ion-tabs .tab-nav .tab-item .tab-title,
+    ion-tabs .tab-nav a .tab-title {
+      font-size: 14px;
+      line-height: 22px; }
+
+/**
+ * Details page
+ */
+.details-page {
+  display: inline-block;
+  width: 100%; }
+  .details-page .user-img {
+    float: left;
+    width: 100%;
+    text-align: center; }
+    .details-page .user-img img {
+      max-width: 100%; }
+      @media (max-width: 480px) {
+        .details-page .user-img img {
+          width: 100%; } }
+  .details-page .product-details {
+    display: inline-block;
+    width: 100%;
+    text-align: center; }
+
+
+
+
+
+    .itemMenuColor{
+
+    	background-color: red;
+    }

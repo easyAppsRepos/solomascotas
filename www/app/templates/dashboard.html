@@ -1,0 +1,50 @@
+<ion-view>
+  <ion-nav-title>Eventos </ion-nav-title>
+  <ion-content padding="true" style='color:#444'>
+    <br>
+    <form name="form.search" ng-submit="form.search.$valid && goToList()">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" ng-model="search.string" required="required" placeholder="Ciudad, tipo o palabra">
+      </label>
+      <br />
+      <!-- <div>
+        <label class="checkbox" style="display:flex; align-items: center">
+          <input type="checkbox" ng-model="search.satTrans" style="margin-right: 20px;">
+          Eventos de adopcion
+        </label>
+      </div>
+      <div>
+        <label class="checkbox" style="display:flex; align-items: center">
+          <input type="checkbox" ng-model="search.wheelChair" style="margin-right: 20px;">
+          Eventos de esterilizacion
+        </label>
+      </div> -->
+      <div>
+        <label class="checkbox" style="display:flex; align-items: center">
+          <input type="checkbox" ng-model="search.wheelChairLift" style="margin-right: 20px;">
+          Filtrar por cercania
+        </label>
+      </div>
+      <!-- <button class="button button-balanced button-block" ng-disabled="form.search.$invalid"><b>Buscar</b></button> -->
+    </form>
+
+    <h3 style="color:#444"><span>Eventos programados</span></h3>
+    <ion-list>
+      <ion-item class="item-icon-right item-avatar item-royal" ui-sref="detail({id: event.idEvento})" ng-repeat="event in events | filter:{ descripcion: search.string } | filter:{ nombre: search.string } track by event.idEvento  | limitTo:limit">
+        <img ng-src="img/campana{{event.tipoEvento}}.png">
+        <h2 style='color:white !important' class="positive">{{event.nombre}}</h2>
+        <p>
+          <b>{{event.tipoEvento == 1 ? 'Esterilizacion' : event.tipoEvento == 2 ? 'Adopcion' : event.tipoEvento == 3 ? 'Reunir Fondos' : 'Otro'}}</b> / 24/08/2017<br>
+          {{event.descripcion}} 
+        </p>
+        <i class="icon ion-ios-arrow-right"></i>
+      </ion-item>
+      <ion-item class="text-center item-royal" ng-if="events && !events.length">No events found :(</ion-item>
+    </ion-list>
+    <ion-infinite-scroll
+      ng-if="!events"
+      on-infinite="loadNext()">
+    </ion-infinite-scroll>
+  </ion-content>
+</ion-view>
