@@ -36,13 +36,16 @@
 
   <preference name="android-minSdkVersion" value="16"/>
   <preference name="BackupWebStorage" value="none"/>
-  
-<!--
+
     <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
 
-   <feature name="StatusBar">
+  <preference name="StatusBarOverlaysWebView" value="false" />
+
+  <preference name="StatusBarStyle" value="lightcontent" />
+  
+<!--   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature> 
 
