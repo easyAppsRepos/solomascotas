@@ -529,6 +529,8 @@ var n = d.getTime();
  options.chunkedMode = false;
 
  $scope.imagenAnuncio = imageURI;
+
+ 
 $ionicLoading.hide(); //bb24
 /*
 
