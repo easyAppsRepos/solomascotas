@@ -10,6 +10,9 @@ app.factory('api', function($http, $q, $window, serverConfig) {
 
     return {
 
+      
+
+
 getPublicaciones:function(){  
 
             return  $http.post(serverConfig.url+'/getPublicaciones')
@@ -24,6 +27,38 @@ getPublicaciones:function(){
             return response;
             });
         },
+
+        registrarUsuario:function(usuario){  
+
+            return  $http.post(serverConfig.url+'/registrarUsuario', usuario)
+            .then(function(response) {
+            console.log(response);
+            return response;
+            }, function(response) {
+            // something went wrong
+            console.log('error');
+             console.log(response);
+
+            return response;
+            });
+        },
+
+        doLogin:function(usuario){  
+
+            return  $http.post(serverConfig.url+'/doLogin', usuario)
+            .then(function(response) {
+            console.log(response);
+            return response;
+            }, function(response) {
+            // something went wrong
+            console.log('error');
+             console.log(response);
+
+            return response;
+            });
+        },
+
+
             getProximosEventos:function(){  
 
             return  $http.post(serverConfig.url+'/getEventosProximos')

@@ -99,3 +99,23 @@ ion-tabs .tab-nav {
 
     	background-color: red;
     }
+
+
+    .popup-head {
+    padding: 0px !important;
+     border-bottom: 0px;
+
+  }
+.popup-container .popup {
+
+    background-color: rgb(0, 173, 158);
+
+  }
+
+
+  .button-blueCustom{
+    color: #00AD9E;
+    background-color: white;
+
+  }
+

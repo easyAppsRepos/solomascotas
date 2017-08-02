@@ -33,7 +33,30 @@ define([
 $ionicConfigProvider.backButton.previousTitleText(false).text('');
       //$ionicConfigProvider.backButton.previousTitleText(false);
       // url routes/states
+      //$urlRouterProvider.otherwise('listaMascotas');
+
+
+
+
+
+
+          if(localStorage.getItem('userInfoSM') == null || 
+            localStorage.getItem('userInfoSM') == 'null' || 
+            localStorage.getItem('userInfoSM') == 'undefined' || 
+            localStorage.getItem('userInfoSM') == undefined){
+
+        //console.log(localStorage.getItem('userInfoTS'));
+      $urlRouterProvider.otherwise('login');
+
+        }
+        else{
+           // console.log(localStorage.getItem('userInfoTS'));
       $urlRouterProvider.otherwise('listaMascotas');
+        // $urlRouterProvider.otherwise("/login");
+        }
+
+
+
 
       $stateProvider
         // app states
@@ -52,6 +75,12 @@ $ionicConfigProvider.backButton.previousTitleText(false).text('');
           url: '/contactanos',
           templateUrl: 'app/templates/contactanos.html',
           controller: 'contactanosCtrl'
+        })
+
+        .state('login', {
+          url: '/login',
+          templateUrl: 'app/templates/login.html',
+          controller: 'loginCtrl'
         })
 
 
