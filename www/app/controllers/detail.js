@@ -487,6 +487,16 @@ $scope.fotoNombre = 0;
 
 
 
+$scope.$on('$ionicView.enter', function(event, viewData) {
+
+
+$scope.usuarioInfo={};
+  var userData = JSON.parse(window.localStorage.getItem('userInfoSM'));
+
+  $scope.usuarioInfo.id =  userData.id;
+
+
+});
 
 
 $scope.agregarAnuncio = function () {
@@ -537,7 +547,6 @@ if(tipo==1){
 
 
 
-
 $scope.registrarAnuncio = function (anuncio) {
         
 
@@ -551,6 +560,7 @@ $scope.registrarAnuncio = function (anuncio) {
           $ionicLoading.show();
         console.log(anuncio);
         anuncio.foto= $scope.fotoNombre;
+        anuncio.idUsuario= $scope.usuarioInfo.id;
 
 
           var ft = new FileTransfer();
@@ -590,7 +600,7 @@ $scope.registrarAnuncio = function (anuncio) {
 
            console.log(JSON.stringify(error));
            $ionicLoading.hide();
-           mensajeAlerta(1, 'Ha ocurrido un error, no se ha podido agregar el anuncio');
+           mensajeAlerta(1, 'Ha ocurrido un error. No se ha podido agregar el anuncio');
 
            }, $scope.optionsSc);
 
