@@ -548,7 +548,7 @@ $scope.registrarAnuncio = function (anuncio) {
 
         }
 
-
+          $ionicLoading.show();
         console.log(anuncio);
         anuncio.foto= $scope.fotoNombre;
 
@@ -592,7 +592,7 @@ $scope.registrarAnuncio = function (anuncio) {
            $ionicLoading.hide();
            mensajeAlerta(1, 'Ha ocurrido un error, no se ha podido agregar el anuncio');
 
-           }, options);
+           }, $scope.optionsSc);
 
 
 
@@ -638,6 +638,7 @@ var n = d.getTime();
  options.params = params;
  options.chunkedMode = false;
 
+$scope.optionsSc = options;
  
 
 
