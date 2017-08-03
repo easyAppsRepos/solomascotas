@@ -28,6 +28,23 @@ getPublicaciones:function(){
             });
         },
 
+        getLugares:function(){  
+
+            return  $http.post(serverConfig.url+'/getLugares')
+            .then(function(response) {
+            console.log(response);
+            return response;
+            }, function(response) {
+            // something went wrong
+            console.log('error');
+             console.log(response);
+
+            return response;
+            });
+        },
+
+        
+
         registrarUsuario:function(usuario){  
 
             return  $http.post(serverConfig.url+'/registrarUsuario', usuario)
@@ -187,6 +204,7 @@ $scope.usuarioInfo={};
         }).finally(function () {
 
           $scope.$broadcast('scroll.infiniteScrollComplete');
+           $scope.$broadcast('scroll.refreshComplete');
 
         });
 

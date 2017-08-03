@@ -452,6 +452,7 @@ $ionicLoading.show();
 
 $scope.foto={};
 $scope.fotoNombre = 0;
+ $scope.lugaresLista = 0;
   /*    eventService.getOne($stateParams.id).then(function (event) {
         $scope.event = event;
       }).finally(function () {
@@ -469,7 +470,11 @@ $scope.fotoNombre = 0;
   };
 
 
-      api.getPublicaciones().then(function (events) {
+ 
+
+$scope.getPublis = function(){
+
+     api.getPublicaciones().then(function (events) {
 
           //$scope.events = events;
           //$scope.events = events.data.evento;
@@ -480,12 +485,14 @@ $scope.fotoNombre = 0;
 
           
             $scope.loading = false;
-           
+            $scope.$broadcast('scroll.refreshComplete');
           
 
         });
 
+}
 
+$scope.getPublis();
 
 $scope.$on('$ionicView.enter', function(event, viewData) {
 
@@ -500,9 +507,42 @@ $scope.usuarioInfo={};
 
 
 $scope.agregarAnuncio = function () {
+
+
+if( $scope.lugaresLista == 0){
+
+ $ionicLoading.show();
+               //$state.reload();
+               api.getLugares().then(function (events) {
+
+              if(events.data.error == false){
+
+                  console.log('lugaresload');
+                  $scope.lugaresLista=events.data.lugares;
+                  $scope.openModal("nuevoAnuncio.html", "slide-in-up");
+
+
+              }
+              else{
+
+              mensajeAlerta(1, 'Ha ocurrido un error, verifique su conexion a internet');
+
+              }
+              }).finally(function () {
+
+              $ionicLoading.hide();
+               });
+
+
+}
+
+else{
+   $scope.openModal("nuevoAnuncio.html", "slide-in-up");
+}
+
+
         
-        console.log('agregarAnuncio');
-        $scope.openModal("nuevoAnuncio.html", "slide-in-up");
+
 
 
       };
@@ -687,11 +727,16 @@ var ft = new FileTransfer();
 
 
       $scope.reload = function () {
-        eventService.getOne($stateParams.id).then(function (event) {
+
+
+/*        eventService.getOne($stateParams.id).then(function (event) {
           $scope.event = event;
         }).finally(function () {
           $scope.$broadcast('scroll.refreshComplete');
-        });
+        });*/
+        $scope.getPublis();
+
+
       };
 
 
