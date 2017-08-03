@@ -31,6 +31,24 @@
     border-bottom: solid 2px white; color:white" type="text" class="inputRegistrar md-input" required="required">
 
 
+
+                       <div style="margin-top:13px"><label style="    color: white;
+    font-size: 17px !important;">Tipo de anuncio</label></div>
+
+    <select ng-model='anuncio.tipoAnuncio'  style="    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: white;" required="required">
+
+    <!--   <option ng-repeat='l in lugares' ng-value='l.idLugar' >{{l.nombre}}</option> -->
+     <option ng-value='1' >Encontrado</option>
+      <option  ng-value='2' >Perdido</option>
+      <option  ng-value='3' >Se regalan</option>
+    </select>
+
+
+
+
    <div style="margin-top:13px"><label style="    color: white;
     font-size: 17px !important;">Lugar</label></div>
 
@@ -58,6 +76,22 @@
       <option  ng-value='2' >Gato</option>
       <option  ng-value='3' >Otro</option>
     </select>
+
+                          <div style="margin-top:13px"><label style="    color: white;
+    font-size: 17px !important;">Genero</label></div>
+
+    <select ng-model='anuncio.genero'  style="    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: white;" required="required">
+
+    <!--   <option ng-repeat='l in lugares' ng-value='l.idLugar' >{{l.nombre}}</option> -->
+     <option ng-value='1' >Macho</option>
+      <option  ng-value='2' >Hembra</option>
+      <option  ng-value='3' >No especificado</option>
+    </select>
+
+
 
 
 

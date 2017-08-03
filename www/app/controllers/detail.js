@@ -451,7 +451,7 @@ $ionicLoading.show();
 
 
 $scope.foto={};
-
+$scope.fotoNombre = 0;
   /*    eventService.getOne($stateParams.id).then(function (event) {
         $scope.event = event;
       }).finally(function () {
@@ -499,6 +499,113 @@ $scope.agregarAnuncio = function () {
 
 
 
+  function mensajeAlerta(tipo, mensaje){
+    console.log(tipo);
+    var ima ='exclam.png';
+if(tipo==1){
+
+     var customTemplate =
+        '<div style="text-align:center;"><img style="margin-top:10px" src="img/exclam.png"> <p style="    font-size: 18px;color:white; margin-top:25px">'+mensaje+'</p> </div>';
+
+
+}
+  if(tipo == 2){
+
+     var customTemplate =
+        '<div style="text-align:center;"><img style="margin-top:10px" src="img/confirma.png"> <p style="    font-size: 18px;color:white; margin-top:25px">'+mensaje+'</p> </div>';
+
+}
+
+      $ionicPopup.show({
+        template: customTemplate,
+        title: '',
+        subTitle: '',
+        buttons: [{
+          text: 'Cerrar',
+          type: 'button-blueCustom',
+          onTap: function(e) {
+
+    console.log('ok');
+          }
+           // if(borrar){ $scope.user.pin='';}
+           
+          
+        }]
+      });
+
+}
+
+
+
+
+$scope.registrarAnuncio = function (anuncio) {
+        
+
+        if($scope.fotoNombre == 0){
+
+           mensajeAlerta(1, 'Debes agregar una foto');
+           return false;
+
+        }
+
+
+        console.log(anuncio);
+        anuncio.foto= $scope.fotoNombre;
+
+
+          var ft = new FileTransfer();
+           ft.upload($scope.foto.imagenAnuncio, serverConfig.imageStorageURL+"/dist/anuncio/upload.php", function(result){
+
+           console.log(JSON.stringify(result));
+           // $ionicLoading.hide();
+
+            console.log('Foto cambiada correctamente');
+            //$state.reload();
+               api.registrarAnuncio(anuncio).then(function (events) {
+
+              if(events.data.error == false){
+
+
+
+                 mensajeAlerta(2, 'Anuncio agregado correctamente');
+
+                 $scope.closeModal();
+
+
+              }
+              else{
+
+              mensajeAlerta(1, 'Ha ocurrido un error, no se ha podido agregar el anuncio');
+
+              }
+              }).finally(function () {
+
+              $ionicLoading.hide();
+               });
+
+
+
+
+           }, function(error){
+
+           console.log(JSON.stringify(error));
+           $ionicLoading.hide();
+           mensajeAlerta(1, 'Ha ocurrido un error, no se ha podido agregar el anuncio');
+
+           }, options);
+
+
+
+
+
+       
+
+     
+
+
+      };
+
+
 $scope.cambiarFoto = function(){
 getImage();
 function getImage() {
@@ -522,6 +629,7 @@ var n = d.getTime();
  var options = new FileUploadOptions();
  options.fileKey = "file";
  options.fileName = 'anuncio'+n;
+ $scope.fotoNombre = 'anuncio'+n;
  options.mimeType = "image/jpeg";
  console.log(options.fileName);
  var params = new Object();

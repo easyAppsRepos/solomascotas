@@ -58,7 +58,20 @@ getPublicaciones:function(){
             });
         },
 
+registrarAnuncio:function(usuario){  
 
+            return  $http.post(serverConfig.url+'/registrarAnuncio', usuario)
+            .then(function(response) {
+            console.log(response);
+            return response;
+            }, function(response) {
+            // something went wrong
+            console.log('error');
+             console.log(response);
+
+            return response;
+            });
+        },
             getProximosEventos:function(){  
 
             return  $http.post(serverConfig.url+'/getEventosProximos')
