@@ -72,6 +72,23 @@ registrarAnuncio:function(usuario){
             return response;
             });
         },
+
+        registrarEvento:function(usuario){  
+
+            return  $http.post(serverConfig.url+'/registrarEvento', usuario)
+            .then(function(response) {
+            console.log(response);
+            return response;
+            }, function(response) {
+            // something went wrong
+            console.log('error');
+             console.log(response);
+
+            return response;
+            });
+        },
+
+
             getProximosEventos:function(){  
 
             return  $http.post(serverConfig.url+'/getEventosProximos')
@@ -125,12 +142,29 @@ registrarAnuncio:function(usuario){
   app.controller('DashboardCtrl', [
     '$scope',
     '$state',
+    '$ionicModal',
+    '$ionicLoading',
+    '$ionicPopup',
     'eventService',
     'api',
-    function ($scope, $state, eventService, api) {
+    function ($scope, $state, $ionicModal, $ionicLoading, $ionicPopup, eventService, api) {
       $scope.search = {};
 
       
+
+
+$scope.$on('$ionicView.enter', function(event, viewData) {
+
+
+$scope.usuarioInfo={};
+  var userData = JSON.parse(window.localStorage.getItem('userInfoSM'));
+
+  $scope.usuarioInfo.id =  userData.id;
+
+
+});
+
+
       $scope.goToList = function () {
         console.log('btn');
         $state.go('results', {
@@ -160,6 +194,82 @@ registrarAnuncio:function(usuario){
 
       };
 
+  function mensajeAlerta(tipo, mensaje){
+    console.log(tipo);
+    var ima ='exclam.png';
+if(tipo==1){
+
+     var customTemplate =
+        '<div style="text-align:center;"><img style="margin-top:10px" src="img/exclam.png"> <p style="    font-size: 18px;color:white; margin-top:25px">'+mensaje+'</p> </div>';
+
+
+}
+  if(tipo == 2){
+
+     var customTemplate =
+        '<div style="text-align:center;"><img style="margin-top:10px" src="img/confirma.png"> <p style="    font-size: 18px;color:white; margin-top:25px">'+mensaje+'</p> </div>';
+
+}
+
+      $ionicPopup.show({
+        template: customTemplate,
+        title: '',
+        subTitle: '',
+        buttons: [{
+          text: 'Cerrar',
+          type: 'button-blueCustom',
+          onTap: function(e) {
+
+    console.log('ok');
+          }
+           // if(borrar){ $scope.user.pin='';}
+           
+          
+        }]
+      });
+
+}
+
+
+
+ $scope.registrarEvento = function(evento) {
+
+  evento.idUsuario= $scope.usuarioInfo.id;
+  console.log(evento);
+
+  $ionicLoading.show();
+                 api.registrarEvento(evento).then(function (events) {
+
+              if(events.data.error == false){
+
+
+
+                 mensajeAlerta(2, 'Evento agregado correctamente');
+
+                 $scope.closeModal();
+
+
+              }
+              else{
+
+              mensajeAlerta(1, 'Ha ocurrido un error, no se ha podido agregar el evento');
+
+              }
+              }).finally(function () {
+
+              $ionicLoading.hide();
+               });
+
+
+  };
+
+ $scope.agregarEvento = function() {
+        console.log('agregarAnuncio');
+        $scope.openModal("nuevoEvento.html", "slide-in-up");
+  };
+
+
+
 
 
         $scope.grid_view = function() {
@@ -170,6 +280,31 @@ registrarAnuncio:function(usuario){
     }
   };
 
+      $scope.openModal = function(templateName,animation) {
+    $ionicModal.fromTemplateUrl(templateName, {
+      scope: $scope,
+      animation: animation
+    }).then(function(modal) {
+      $scope.modal = modal;
+      $scope.modal.show();
+    });
+  };
+
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
 
 
 
