@@ -104,9 +104,11 @@
     font-size: 17px !important;">Foto</label></div>
 
    
-    <button class="button" ng-click='cambiarFoto()'><i  style='' class="ion-image"></i>Agregar imagen</button>
-     <img ng-src='data:image/jpeg;base64,{{imagenAnuncio}}'  >
+    <button class="button" ng-click='cambiarFoto()'><i  style='' class="ion-image"></i>Agregar imagen</button><br>
 
+<div style="text-align:center">
+     <img style='height: 200px;margin-top: 28px;' ng-src='data:image/jpeg;base64,{{foto.imagenAnuncio}}'>
+</div>
                     </div>
 
                          

@@ -449,7 +449,7 @@ $ionicLoading.show();
 
 
 
-
+$scope.foto={};
 
   /*    eventService.getOne($stateParams.id).then(function (event) {
         $scope.event = event;
@@ -511,7 +511,8 @@ function getImage() {
 }
 
 function uploadPhoto(imageURI) {
-
+$scope.foto.imagenAnuncio = imageURI;
+console.log(imageURI);
   var d = new Date();
 var n = d.getTime();
 
@@ -528,9 +529,9 @@ var n = d.getTime();
  options.params = params;
  options.chunkedMode = false;
 
- $scope.imagenAnuncio = imageURI;
-
  
+
+
 $ionicLoading.hide(); //bb24
 /*
 
