@@ -439,11 +439,12 @@ $ionicLoading.show();
     '$stateParams',
     '$window',
     '$ionicPopup',
+    '$ionicLoading',
     '$ionicModal',
     'eventService',
     'api',
     'serverConfig',
-    function ($scope, $stateParams, $window, $ionicPopup, $ionicModal, eventService, api, serverConfig) {
+    function ($scope, $stateParams, $window, $ionicPopup, $ionicLoading, $ionicModal, eventService, api, serverConfig) {
 
       $scope.loading = true;
 
