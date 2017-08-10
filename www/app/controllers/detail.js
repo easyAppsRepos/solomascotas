@@ -453,6 +453,7 @@ $ionicLoading.show();
 $scope.foto={};
 $scope.fotoNombre = 0;
  $scope.lugaresLista = 0;
+ $scope.fotoV = false;
   /*    eventService.getOne($stateParams.id).then(function (event) {
         $scope.event = event;
       }).finally(function () {
@@ -629,7 +630,7 @@ $scope.registrarAnuncio = function (anuncio) {
                var latitudePerson = pos.coords.latitude;
                 var longitudePerson = pos.coords.longitude;
                 //var dataLL = {lat:latitudePerson,lon:longitudePerson}
-                  console.log(dataLL);
+                 // console.log(dataLL);
                  
                   
          anuncio.foto= $scope.fotoNombre;
@@ -707,6 +708,7 @@ function getImage() {
 
 function uploadPhoto(imageURI) {
 $scope.foto.imagenAnuncio = imageURI;
+$scope.fotoV = true;
 console.log(imageURI);
   var d = new Date();
 var n = d.getTime();
