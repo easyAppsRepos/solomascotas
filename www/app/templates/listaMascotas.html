@@ -32,6 +32,18 @@
 
 
 
+
+
+                        <div  style="margin-top:13px"><label style="    color: white;
+    font-size: 17px !important;">Fecha en que se perdió, se encontró o la fecha actual si es que se regalan</label></div>
+                        <input   ng-model='anuncio.fecha' style='    width: 100%;
+    background-color: transparent;
+    border-bottom: solid 2px white; color:white' placeholder='' type="date" class="inputRegistrar md-input" required="required">
+
+
+
+
+
                        <div style="margin-top:13px"><label style="    color: white;
     font-size: 17px !important;">Tipo de anuncio</label></div>
 
@@ -49,7 +61,7 @@
 
 
 
-   <div style="margin-top:13px"><label style="    color: white;
+<!--    <div style="margin-top:13px"><label style="    color: white;
     font-size: 17px !important;">Lugar</label></div>
 
     <select ng-model='anuncio.lugar'  style="    margin-top: 10px;
@@ -59,7 +71,7 @@
 
        <option ng-repeat='l in lugaresLista' ng-value='l.codigoInterno' >{{l.nombre}}</option>
  
-    </select>
+    </select> -->
 
 
                       <div style="margin-top:13px"><label style="    color: white;
@@ -133,6 +145,15 @@
     </select>
 
 
+                            <div  style="margin-top:13px"><label style="    color: white;
+    font-size: 17px !important;">Video (link a youtube)</label></div>
+                        <input   ng-model='anuncio.video' style='    width: 100%;
+    background-color: transparent;
+    border-bottom: solid 2px white; color:white' placeholder='' type="text" class="inputRegistrar md-input">
+
+
+
+
                       <div style="margin-top:13px"><label style="    color: white;
     font-size: 17px !important;">Foto</label></div>
 
@@ -143,8 +164,13 @@
     line-height: 1;" ng-click='cambiarFoto()'><i  style='' class="ion-image"></i>Agregar imagen</button><br>
 
 <div style="text-align:center">
-     <img style='height: 200px;margin-top: 28px;' ng-src='{{foto.imagenAnuncio}}'>
+     <img ng-show='{{foto.imagenAnuncio}}'  style='height: 200px;margin-top: 28px;' ng-src='{{foto.imagenAnuncio}}'>
 </div>
+
+
+<input style="margin-top:20px" type="checkbox" ng-model='anuncio.terminos'  required="required" > Acepto los <a  style='text-decoration: underline;' ng-click='openLink()'> Terminos y condiciones</a>
+
+
                     </div>
 
                          

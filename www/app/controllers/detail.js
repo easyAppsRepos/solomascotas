@@ -472,6 +472,10 @@ $scope.fotoNombre = 0;
 
  
 
+ $scope.openLink = function(link){
+    $window.open('http://solomascotas.cl/registro/terminos.pdf', '_system');
+ }
+
 $scope.getPublis = function(){
 
      api.getPublicaciones().then(function (events) {
@@ -509,7 +513,8 @@ $scope.usuarioInfo={};
 $scope.agregarAnuncio = function () {
 
 
-if( $scope.lugaresLista == 0){
+//if( $scope.lugaresLista == 0){
+if( false){
 
  $ionicLoading.show();
                //$state.reload();
@@ -587,8 +592,10 @@ if(tipo==1){
 
 
 
+
 $scope.registrarAnuncio = function (anuncio) {
-        
+      
+      console.log(anuncio);  
 
         if($scope.fotoNombre == 0){
 
@@ -597,11 +604,38 @@ $scope.registrarAnuncio = function (anuncio) {
 
         }
 
+        if(anuncio.video == '' || anuncio.video == ' ' || anuncio.video ==  undefined || anuncio.video == null){
+
+          anuncio.video = '';
+          
+
+        }
+
+
+
+
+
+
           $ionicLoading.show();
         console.log(anuncio);
-        anuncio.foto= $scope.fotoNombre;
-        anuncio.idUsuario= $scope.usuarioInfo.id;
 
+
+
+
+  navigator.geolocation.getCurrentPosition(function(pos) {
+         console.log(pos.coords.latitude+' Long: '+ pos.coords.longitude);
+    
+
+               var latitudePerson = pos.coords.latitude;
+                var longitudePerson = pos.coords.longitude;
+                //var dataLL = {lat:latitudePerson,lon:longitudePerson}
+                  console.log(dataLL);
+                 
+                  
+         anuncio.foto= $scope.fotoNombre;
+        anuncio.idUsuario= $scope.usuarioInfo.id;
+        anuncio.lat = latitudePerson;
+        anuncio.lon = longitudePerson;
 
           var ft = new FileTransfer();
            ft.upload($scope.foto.imagenAnuncio, serverConfig.imageStorageURL+"/dist/anuncio/upload.php", function(result){
@@ -648,9 +682,12 @@ $scope.registrarAnuncio = function (anuncio) {
 
 
 
-       
+        }, function(error) {
+           $ionicLoading.hide();
 
-     
+         mensajeAlerta(1,'Debes activar el GPS para ubicar la zona');
+        })
+
 
 
       };
