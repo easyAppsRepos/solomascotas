@@ -187,6 +187,141 @@
 
 
 
+
+ <script id="buscarAnuncio.html" type="text/ng-template">
+  <ion-modal-view class="ion-nifty-modal2">
+    <div  class="ion-modal-content-custom2">
+
+
+      <ion-content class="padding " style="background-color: #00AD9E; color:white" >
+  <i ng-click='closeModal()' style='    color: white;
+    font-size: 35px;' class=" ion-android-cancel"></i>
+      <div class='' style="    margin-left: 3%;margin-right: 3%;   margin-top: 3%;">
+
+
+
+                    <div  style='      color: white;
+      margin-top: 15px;font-size: 17px !important;    padding-bottom: 13px;' >Buscar</div>
+
+                    <div  class="list " >
+
+
+              <div  style='       padding: 0px;
+    background-color: transparent;
+    border-bottom: none;' class="bar bar-header item-input-inset">
+              <label class="item-input-wrapper">
+              <i class="icon ion-ios-search placeholder-icon"></i>
+              <input type="search" placeholder="Busqueda por palabra" ng-model='filtro.palabra'>
+              </label>
+              <button  style="color: white;
+    border: solid 1px;
+    padding: 4px;" class="button button-clear" ng-click='busquedaAnuncio(filtro)'>
+              Buscar
+              </button>
+              </div>
+
+
+
+
+                        <div  style="margin-top:13px"><label style="    color: white;
+    font-size: 17px !important;">Filtros</label></div>
+                       
+
+
+                       <div style="margin-top:13px"><label style="    color: white;
+    font-size: 17px !important;">Tipo de anuncio</label></div>
+
+    <select ng-model='filtro.tipoAnuncio'  style="    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: white;" required="required">
+
+    <!--   <option ng-repeat='l in lugares' ng-value='l.idLugar' >{{l.nombre}}</option> -->
+     <option ng-value='1' >Encontrado</option>
+      <option  ng-value='2' >Perdido</option>
+      <option  ng-value='3' >Se regalan</option>
+    </select>
+
+
+
+                       <div style="margin-top:13px"><label style="    color: white;
+    font-size: 17px !important;">Distancia</label></div>
+
+    <select ng-model='filtro.distancia'  style="    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: white;" ng-disabled="!gpsActivo">
+
+    <!--   <option ng-repeat='l in lugares' ng-value='l.idLugar' >{{l.nombre}}</option> -->
+     <option ng-value='10' >10km</option>
+      <option  ng-value='50' >50km</option>
+      <option  ng-value='70' >70km</option>
+    </select>
+
+
+
+                       <div style="margin-top:13px"><label style="    color: white;
+    font-size: 17px !important;">Tipo Mascota</label></div>
+
+    <select ng-model='filtro.tipoMascota'  style="    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: white;" required="required">
+
+    <!--   <option ng-repeat='l in lugares' ng-value='l.idLugar' >{{l.nombre}}</option> -->
+     <option ng-value='1' >Perro</option>
+      <option  ng-value='2' >Gato</option>
+      <option  ng-value='3' >Otro</option>
+    </select>
+
+
+
+                       <div style="margin-top:13px"><label style="    color: white;
+    font-size: 17px !important;">Fecha</label></div>
+
+    <select ng-model='filtro.fecha'  style="    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: white;" required="required">
+
+    <!--   <option ng-repeat='l in lugares' ng-value='l.idLugar' >{{l.nombre}}</option> -->
+     <option ng-value='7' >Ultima semana</option>
+      <option  ng-value='30' >Ultimo mes</option>
+      <option  ng-value='180' >Ultimos 6 meses</option>
+    </select>
+
+
+<!--    <div style="margin-top:13px"><label style="    color: white;
+    font-size: 17px !important;">Lugar</label></div>
+
+    <select ng-model='anuncio.lugar'  style="    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: white;" required="required">
+
+       <option ng-repeat='l in lugaresLista' ng-value='l.codigoInterno' >{{l.nombre}}</option>
+ 
+    </select> -->
+
+
+
+
+                    </div>
+
+                         
+       
+
+   
+        
+      </div> 
+      <!--   <button class="button button-full button-positive" ng-click="closeModal()">Close Modal</button> -->
+      </ion-content>
+    </div>
+  </ion-modal-view>
+</script>
+
+
+
           <ion-nav-buttons side="left">
            <!-- Toggle left side menu -->
            <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
@@ -196,13 +331,17 @@
 
           <ion-nav-buttons side="right">
            <!-- Toggle left side menu -->
+           <button  class="button button-icon ion-android-search" ng-click='buscarAnuncio()' ></button>
            <button  class="button button-icon icon ion-plus" ng-click='agregarAnuncio()' ></button>
+             
           </ion-nav-buttons>
 
 
 
   <ion-nav-title>Publicaciones</ion-nav-title>
   <ion-content padding="true">
+
+
 
     <ion-refresher class="spinner-balanced" on-refresh="reload()"></ion-refresher>
 
@@ -213,6 +352,17 @@
 
     <div ng-show="!loading">
     	    <div class="{{layout}} chat-list-wrap">
+
+
+
+
+
+          <div style='    font-size: 15px;
+    text-align: center;
+    color: #777;
+    margin-top: 20px;'  ng-show='chats.length == 0' > No se han encontrado publicaciones</div>
+
+
       <a class="item item-thumbnail-left" ng-repeat="chat in chats" ui-sref="detailPublicacion({id: chat.id})" style="    min-height: 172px; margin-top: 10px;"> 
         <img ng-src="{{urlImg}}/{{chat.photo}}" style="border-radius: 5%;    border: none;">
         <h2 style="color:#FF8600; white-space: pre-line !important">{{chat.nombre}}</h2>

@@ -1,0 +1,91 @@
+<ion-view hide-back-button='true'>
+
+          <ion-nav-buttons side="left">
+           <!-- Toggle left side menu -->
+           <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+          </ion-nav-buttons>
+
+
+
+     
+
+
+  <ion-nav-title>Mis publicaciones</ion-nav-title>
+  <ion-content padding="true">
+
+    <ion-refresher class="spinner-balanced" on-refresh="reload()"></ion-refresher>
+
+    <div class="text-center">
+      <ion-spinner class="spinner-balanced" ng-show="loading"></ion-spinner>
+    </div>
+
+
+    <div ng-show="!loading">
+    	    <div class="{{layout}} chat-list-wrap">
+
+          <div style="text-align: center;
+    margin-top: 30px;
+    color: #888;" ng-show='chats.length==0'>No hay publicaciones</div>
+
+
+      <a class="item item-thumbnail-left" ng-repeat="chat in chats"  style="    min-height: 172px; margin-top: 10px;"> 
+        <img ng-src="{{urlImg}}/{{chat.photo}}" style="border-radius: 5%;    border: none;">
+        <h2 style="color:#FF8600; white-space: pre-line !important">{{chat.nombre}}</h2>
+
+        
+       
+
+     <div style="margin-top: 10px;white-space: pre-line;"> {{chat.numeroComentarios}} comentarios</div>
+
+         <div style="white-space: pre-line;">Hace {{chat.tiempoPublicacion}} dias</div>
+
+
+
+
+        <div style="margin-top:10px;color:#444 !important;"> 
+
+       
+
+ <button class='button'  ng-click='goDetalle(chat.id); ' style='margin-top: 5px;
+    height: 30px;
+    min-height: 30px;
+    line-height: 1.6;
+    min-width: 169px;
+    FONT-SIZE: 14PX;' class="button">Ver    publicacion</button>
+
+    </div>
+
+
+  <button class='button'  ng-click='cerrarAnuncio(chat.id); ' style='margin-top: 5px;
+    height: 30px;
+    min-height: 30px;
+    line-height: 1.6;
+    min-width: 169px;
+    FONT-SIZE: 14PX;' class="button">Cerrar publicacion</button>
+
+
+
+      </a>
+    </div>
+    </div>
+  </ion-content>
+<!--   <ion-footer-bar class="bar-stable">
+    <div class="buttons">
+      <div class="button button-clear" ng-disabled="loading" ng-click="map()">
+        <i class="icon ion-map"></i> Maps
+      </div>
+    </div>
+    <h1 class="title"></h1>
+    <div class="buttons">
+      <div class="button button-clear" ng-disabled="loading" ng-click="report()">
+        Report
+        <i class="icon ion-android-alert"></i>
+      </div>
+    </div>
+  </ion-footer-bar> -->
+</ion-view>
+
+
+
+
+

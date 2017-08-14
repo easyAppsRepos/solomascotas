@@ -28,6 +28,93 @@ getPublicaciones:function(){
             });
         },
 
+getPublicacionesUser:function(idUser){  
+
+            return  $http.post(serverConfig.url+'/getPublicacionesUser',{idUsuario:idUser})
+            .then(function(response) {
+            console.log(response);
+            return response;
+            }, function(response) {
+            // something went wrong
+            console.log('error');
+             console.log(response);
+
+            return response;
+            });
+        },
+cerrarPublicacion:function(idUser){  
+
+            return  $http.post(serverConfig.url+'/cerrarPublicacion',{idAnuncio:idUser})
+            .then(function(response) {
+            console.log(response);
+            return response;
+            }, function(response) {
+            // something went wrong
+            console.log('error');
+             console.log(response);
+
+            return response;
+            });
+        },
+
+
+
+        publicarComentario:function(comentario){  
+
+            return  $http.post(serverConfig.url+'/publicarComentario',comentario)
+            .then(function(response) {
+            console.log(response);
+            return response;
+            }, function(response) {
+            // something went wrong
+            console.log('error');
+             console.log(response);
+
+            return response;
+            });
+        },
+
+                 recuperarContra:function(email){  
+
+            return  $http.post(serverConfig.url+'/recuperarContra',{email: email})
+            .then(function(response) {
+
+                console.log(response);
+
+            return response.data;
+            }, function(response) {
+            // something went wrong
+               console.log(response);
+               var e = response;
+               e.error =true;
+                //var r.data.error=true;
+
+               if(response.status==404){  e.recuperacionOK =false;}
+
+           
+            return e;
+            });
+        },
+        
+       busquedaAnuncio:function(ss){  
+
+            return  $http.post(serverConfig.url+'/busquedaAnuncio',ss)
+            .then(function(response) {
+            console.log(response);
+            return response;
+            }, function(response) {
+            // something went wrong
+            console.log('error');
+             console.log(response);
+
+            return response;
+            });
+        },
+
+
+
+
+
         getLugares:function(){  
 
             return  $http.post(serverConfig.url+'/getLugares')
