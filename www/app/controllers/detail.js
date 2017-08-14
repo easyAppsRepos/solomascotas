@@ -624,7 +624,7 @@ $ionicLoading.show();
 $scope.foto={};
 $scope.fotoNombre = 0;
  $scope.lugaresLista = 0;
- $scope.fotoV = false;
+ $scope.fotoV = true;
   /*    eventService.getOne($stateParams.id).then(function (event) {
         $scope.event = event;
       }).finally(function () {
@@ -966,6 +966,9 @@ $scope.registrarAnuncio = function (anuncio) {
 
 
                  mensajeAlerta(2, 'Anuncio agregado correctamente');
+                 $scope.foto={};
+                  $scope.fotoNombre = 0;
+
 
                  $scope.closeModal();
 
@@ -1020,9 +1023,13 @@ function getImage() {
 }
 
 function uploadPhoto(imageURI) {
+
 $scope.foto.imagenAnuncio = imageURI;
+
 $scope.fotoV = true;
+
 console.log(imageURI);
+
   var d = new Date();
 var n = d.getTime();
 
@@ -1121,6 +1128,11 @@ var ft = new FileTransfer();
   };
 
   $scope.closeModal = function() {
+
+    $scope.foto={};
+    $scope.fotoNombre = 0;
+
+
     $scope.modal.hide();
   };
   //Cleanup the modal when we're done with it!
@@ -1169,7 +1181,7 @@ var ft = new FileTransfer();
 $scope.foto={};
 $scope.fotoNombre = 0;
  $scope.lugaresLista = 0;
- $scope.fotoV = false;
+ $scope.fotoV = true;
   /*    eventService.getOne($stateParams.id).then(function (event) {
         $scope.event = event;
       }).finally(function () {
