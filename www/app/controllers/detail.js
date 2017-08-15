@@ -380,6 +380,13 @@ if(tipo==1){
 
 }
 
+
+ $scope.openLink = function(link){
+    $window.open('http://solomascotas.cl/registro/terminos.pdf', '_system');
+ }
+
+ 
+
     $scope.olvide = function(){
 
                       var mensaje = 'Correo Electronico'
