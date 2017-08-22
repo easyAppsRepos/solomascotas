@@ -1580,7 +1580,7 @@ function getImage() {
  navigator.camera.getPicture(uploadPhoto, function(message) {
  console.log('getPic cancelled');
  }, {
- quality: 100,
+ quality: 50,
  destinationType: navigator.camera.DestinationType.FILE_URI,
  sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
  });
