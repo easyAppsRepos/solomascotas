@@ -71,6 +71,16 @@ $ionicConfigProvider.backButton.previousTitleText(false).text('');
           templateUrl: 'app/templates/listaMascotas.html',
           controller: 'listaMascotasCtrl'
         })
+
+      .state('buscarAnuncio', {
+          url: '/buscarAnuncio',
+          templateUrl: 'app/templates/buscarAnuncio.html',
+          controller: 'buscarAnuncioCtrl'
+        })
+
+         
+
+
    .state('misPublicaciones', {
           url: '/misPublicaciones',
           templateUrl: 'app/templates/misPublicaciones.html',

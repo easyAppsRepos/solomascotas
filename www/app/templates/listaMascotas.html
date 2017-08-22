@@ -331,14 +331,39 @@
 
           <ion-nav-buttons side="right">
            <!-- Toggle left side menu -->
-           <button  class="button button-icon ion-android-search" ng-click='buscarAnuncio()' ></button>
+        
            <button  class="button button-icon icon ion-plus" ng-click='agregarAnuncio()' ></button>
              
           </ion-nav-buttons>
 
 
 
-  <ion-nav-title>Publicaciones</ion-nav-title>
+  <ion-nav-title>Anuncios</ion-nav-title>
+
+
+
+    <div ng-controller='publiCtrl' ng-show='publicidadActiva' style="     width: 100%;
+    position: absolute;
+    bottom: 0px;
+    max-height: 27%;
+    height: 27% !important;
+    z-index: 5;" >
+      
+      <img style='    width: 95%;
+    bottom: 0;
+    z-index: 15;
+    margin-left: 2.5%;'   ng-click='goPubli()' ng-src="{{urlImg}}/{{imagenPublicidad.imagen}}" ng-src="">
+
+    <i ng-click='cerrarPubli()' style='position: absolute;
+    top: -7px;
+    right: 0;
+    font-size: 30px;
+    margin-right: 0.5%;' class="ion-close-circled" ></i>
+
+  </div>
+
+
+
   <ion-content padding="true">
 
 

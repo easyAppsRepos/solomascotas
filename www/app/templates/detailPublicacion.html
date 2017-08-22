@@ -48,7 +48,7 @@ display:inline-block; white-space: pre-line;color:#444"><img style="      vertic
     line-height: 3;">
   <li style="    height: 30px;">Condicion: {{event.tipoAnuncio}}</li>
   <li style="    height: 30px;">Esterilizacion: {{event.ester}}</li>
-  <li style="    height: 30px;">Ubicacion: {{event.ubicacion}}</li>
+  <li style="    height: 30px;">Ubicacion: {{getDistance(event.distance)}}</li>
   <li style="    height: 30px;">Publicado hace {{event.tiempoPublicacion}} dias</li>
 </ul>
 
@@ -79,11 +79,11 @@ display:inline-block; white-space: pre-line;color:#444"><img style="      vertic
         </ion-item>
 
 
-    <ion-item style='border-top: none' class="item-icon-right">
+<!--     <ion-item style='border-top: none' class="item-icon-right">
            {{event.phone == null || event.phone == "" ? 'No especifica' : event.phone}}
           <i class="icon ion-android-call"></i>
         </ion-item>
-
+ -->
 
      
         <ion-item style='border-top: none' class="item-icon-right">

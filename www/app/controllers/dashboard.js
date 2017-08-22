@@ -162,6 +162,22 @@ cerrarPublicacion:function(idUser){
             });
         },
 
+
+
+getPublicidadUsuario:function(usuario){  
+
+            return  $http.post(serverConfig.url+'/getPublicidadUsuario', {idUsuario:usuario})
+            .then(function(response) {
+            console.log(response);
+            return response;
+            }, function(response) {
+            // something went wrong
+            console.log('error');
+             console.log(response);
+
+            return response;
+            });
+        },
 registrarAnuncio:function(usuario){  
 
             return  $http.post(serverConfig.url+'/registrarAnuncio', usuario)
@@ -222,6 +238,23 @@ registrarAnuncio:function(usuario){
             return response;
             });
         },
+
+         getPublicacionGPS:function(datt){  
+          //  console.log(idEvento);
+            return  $http.post(serverConfig.url+'/getPublicacionGPS', datt)
+            .then(function(response) {
+            console.log(response);
+            return response;
+            }, function(response) {
+            // something went wrong
+            console.log('error');
+             console.log(response);
+
+            return response;
+            });
+        },
+
+        
 
         getEvento:function(idEvento){  
           console.log(idEvento);

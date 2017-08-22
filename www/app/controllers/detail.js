@@ -88,6 +88,75 @@ define([
   ]);
 
 
+app.controller('publiCtrl', function(  $scope, $ionicLoading, $stateParams, $rootScope, $state,$ionicSlideBoxDelegate, api) {
+  
+
+
+  var userData = JSON.parse(window.localStorage.getItem('userInfoSM'));
+
+
+   
+
+
+ $scope.cerrarPubli = function(){
+  console.log('cerrar public');
+  $scope.publicidadActiva = false;
+ }
+
+
+
+$scope.imagenPublicidad={};
+
+$scope.goPubli = function(){
+
+var link = $scope.imagenPublicidad.linkURL;
+
+  if(link == null || link == 'null' || link == 'undefinded'){console.log('nolink')}
+
+  else{
+      window.open(link, '_system', 'location=yes'); return false;
+
+  }  
+
+
+
+}
+
+$scope.getPublicidad = function (){
+
+        api.getPublicidadUsuario(userData.id).then(function(data) {
+
+       // $ionicLoading.hide();
+        console.log(data);
+
+        if(data==null){
+          //mensajeAlerta('Ha ocurrido un error, verifique su conexion a internet'); return false;
+             console.log('ha ocurrido un error' );
+        }
+
+        if(data.data.error){
+            $scope.publicidadActiva = false;
+         // console.log('ha ocurrido un error' );
+        }
+        else{
+ $scope.publicidadActiva = true;
+          $scope.imagenPublicidad.imagen = data.data.data.imagenURL;
+  $scope.imagenPublicidad.linkURL = data.data.data.linkURL;
+console.log($scope.imagenPublicidad);
+        //  $scope.diplomados = data.diplomados;
+         // $scope.nombreMaestria = data.nombreMaestria;
+         // $scope.tesis = data.tesis;
+        //  $scope.dataTesis=data.dataTesis; 
+        
+        }
+        
+
+      });
+
+}
+
+$scope.getPublicidad();
+});
 
 
   app.controller('DetailPublicacionCtrl', [
@@ -111,9 +180,29 @@ define([
 
 */
       
-$scope.getDetallesPubli = function (comentario) {
 
-api.getPublicacion($stateParams.id).then(function (events) {
+      $scope.getDistance = function (distancia) {
+
+        if(distancia){ 
+          return (Math.round(distancia) + ' km');
+          }
+        else{ return 'No definido'}
+      }
+        
+
+
+$scope.getDetallesPubli = function (comentario) {
+$ionicLoading.show();
+
+if(localStorage.getItem("latSM") && localStorage.getItem("lonSM")){
+
+
+           var latitudePerson = localStorage.getItem("latSM");
+                var longitudePerson = localStorage.getItem("lonSM");
+
+                var aEv = {id:$stateParams.id, lat:latitudePerson, lon:longitudePerson};
+
+          api.getPublicacionGPS(aEv).then(function (events) {
 
           //$scope.events = events;
           //$scope.events = events.data.evento;
@@ -125,12 +214,122 @@ api.getPublicacion($stateParams.id).then(function (events) {
 
           
             $scope.loading = false;
+            $ionicLoading.hide();
            
           
 
         });
 
+
+
+
+
 }
+
+
+
+
+else{
+
+  navigator.geolocation.getCurrentPosition(function(pos) {
+         console.log(pos.coords.latitude+' Long: '+ pos.coords.longitude);
+    
+
+               var latitudePerson = pos.coords.latitude;
+                var longitudePerson = pos.coords.longitude;
+
+                window.localStorage.setItem("latSM", latitudePerson);
+                  window.localStorage.setItem("lonSM", longitudePerson);
+
+
+
+
+                var aEv = {id:$stateParams.id, lat:latitudePerson, lon:longitudePerson};
+
+          api.getPublicacionGPS(aEv).then(function (events) {
+
+          //$scope.events = events;
+          //$scope.events = events.data.evento;
+          console.log(events);
+          $scope.event = events.data.evento;
+           $scope.comentarios = events.data.comentarios;
+         // $scope.$broadcast('scroll.infiniteScrollComplete');
+        }).finally(function () {
+
+          
+            $scope.loading = false;
+            $ionicLoading.hide();
+           
+          
+
+        });
+
+
+
+
+
+        }, function(error) {
+     
+
+         api.getPublicacion($stateParams.id).then(function (events) {
+
+          //$scope.events = events;
+          //$scope.events = events.data.evento;
+          console.log(events);
+          $scope.event = events.data.evento;
+           $scope.comentarios = events.data.comentarios;
+         // $scope.$broadcast('scroll.infiniteScrollComplete');
+        }).finally(function () {
+
+                $ionicLoading.hide();
+            $scope.loading = false;
+             mensajeAlerta(1,'Debes activar el GPS para ver la ubicacion');
+           
+          
+
+        });
+
+
+        });
+
+}
+
+
+
+
+
+
+}
+
+
+
+$scope.getPosition = function(){
+
+
+$ionicLoading.show();
+
+    navigator.geolocation.getCurrentPosition(function(pos) {
+
+                 var latitudePerson = pos.coords.latitude;
+                  var longitudePerson = pos.coords.longitude;
+
+                  window.localStorage.setItem("latSM", latitudePerson);
+                  window.localStorage.setItem("lonSM", longitudePerson);
+
+                  return true;
+
+
+          }, function(error) {
+
+            return false;
+       
+          });
+
+
+}
+
+  
+
 
 $scope.getDetallesPubli();
 
@@ -185,11 +384,11 @@ var dataComentario = {
 
 
       $scope.reload = function () {
-        eventService.getOne($stateParams.id).then(function (event) {
-          $scope.event = event;
-        }).finally(function () {
-          $scope.$broadcast('scroll.refreshComplete');
-        });
+
+
+        $scope.getPosition();
+
+
       };
 
       $scope.call = function () {
@@ -597,6 +796,11 @@ $scope.cerrarSesion = function(){
 $ionicLoading.show();
 
   window.localStorage.setItem( 'userInfoSM', undefined);  
+
+       window.localStorage.setItem("latSM", undefined);
+                  window.localStorage.setItem("lonSM", undefined);
+
+
   $state.go('login');
   $timeout(function () {
           $ionicHistory.clearCache();
@@ -610,6 +814,351 @@ $ionicLoading.show();
 
     }
   ]);
+
+
+
+
+    app.controller('buscarAnuncioCtrl', [
+    '$scope',
+    '$stateParams',
+    '$window',
+    '$ionicPopup',
+    '$ionicLoading',
+    '$ionicModal',
+    'eventService',
+    'api',
+    'serverConfig',
+    function ($scope, $stateParams, $window, $ionicPopup, $ionicLoading, $ionicModal, eventService, api, serverConfig) {
+
+      $scope.loading = true;
+
+
+
+$scope.foto={};
+$scope.fotoNombre = 0;
+ $scope.lugaresLista = 0;
+ $scope.fotoV = true;
+  /*    eventService.getOne($stateParams.id).then(function (event) {
+        $scope.event = event;
+      }).finally(function () {
+        $scope.loading = false;
+      });
+
+*/
+  $scope.urlImg = serverConfig.imageStorageURL;
+        $scope.grid_view = function() {
+    if($scope.layout == 'grid'){
+      $scope.layout = "list";
+    } else {
+      $scope.layout = "grid";
+    }
+  };
+
+
+  $scope.busquedaAnuncio = function(filtro){
+
+
+
+if(filtro == 'undefined' || 
+       filtro == 'null' || 
+       filtro == undefined || 
+       filtro == ' ' || 
+       filtro == 0){
+
+      return false;
+
+    }
+
+
+    if(filtro.palabra == 'undefined' || 
+       filtro.palabra == 'null' || 
+       filtro.palabra == undefined || 
+       filtro.palabra == ' ' || 
+       filtro.palabra == ''){
+
+      filtro.palabra = 420;
+
+    }
+
+        if(filtro.tipoAnuncio == 'undefined' || 
+       filtro.tipoAnuncio == 'null' || 
+       filtro.tipoAnuncio == undefined || 
+       filtro.tipoAnuncio == ' ' || 
+       filtro.tipoAnuncio == ''){
+
+      filtro.tipoAnuncio = 420;
+    
+    }
+
+
+        if(filtro.distancia == 'undefined' || 
+       filtro.distancia == 'null' || 
+       filtro.distancia == undefined || 
+       filtro.distancia == ' ' || 
+       filtro.distancia == ''){
+
+      filtro.distancia = 420;
+    
+    }
+
+
+        if(filtro.fecha == 'undefined' || 
+       filtro.fecha == 'null' || 
+       filtro.fecha == undefined || 
+       filtro.fecha == ' ' || 
+       filtro.fecha == ''){
+
+      filtro.fecha = 420;
+    
+    }
+
+
+        if(filtro.tipoMascota == 'undefined' || 
+       filtro.tipoMascota == 'null' || 
+       filtro.tipoMascota == undefined || 
+       filtro.tipoMascota == ' ' || 
+       filtro.tipoMascota == ''){
+
+      filtro.tipoMascota = 420;
+    
+    }
+
+
+    filtro.lat = $scope.latitudePerson || 0;
+    filtro.lon = $scope.longitudePerson || 0;
+
+    $scope.closeModal();
+    $ionicLoading.show();
+
+         api.busquedaAnuncio(filtro).then(function (events) {
+
+          //$scope.events = events;
+          //$scope.events = events.data.evento;
+          console.log(events);
+          $scope.chats = events.data.publicaciones;
+           //$ionicLoading.hide();
+         // $scope.$broadcast('scroll.infiniteScrollComplete');
+        }).finally(function () {
+            $scope.loading = false;
+              $ionicLoading.hide();
+
+              $scope.openModal("resultadoBusqueda.html", "slide-in-up");
+
+        });
+
+
+
+
+ console.log(filtro);
+
+ }
+
+ $scope.openLink = function(link){
+    $window.open('http://solomascotas.cl/registro/terminos.pdf', '_system');
+ }
+
+
+ $scope.buscarAnuncio = function () {
+
+ if($scope.gpsActivo){
+     // $scope.openModal("buscarAnuncio.html", "slide-in-up");
+      return false;
+    }
+
+//$ionicLoading.show();
+$ionicLoading.show({
+      template: '<ion-spinner icon="bubbles"></ion-spinner><p>Obteniendo ubicacion...</p>'
+      // noBackdrop: true
+    });
+  
+
+    navigator.geolocation.getCurrentPosition(function(pos) {
+         console.log(pos.coords.latitude+' Long: '+ pos.coords.longitude);
+    
+
+              $scope.latitudePerson = pos.coords.latitude;
+              $scope.longitudePerson = pos.coords.longitude;
+
+              $scope.gpsActivo = true;
+              $ionicLoading.hide();
+
+            //  $scope.openModal("buscarAnuncio.html", "slide-in-up");
+
+        }, function(error) {
+
+          $scope.latitudePerson = 0;
+              $scope.longitudePerson = 0;
+
+           $scope.gpsActivo = false;
+           $ionicLoading.hide();
+           //$scope.openModal("buscarAnuncio.html", "slide-in-up");
+          mensajeAlerta(1,'Debes activar el GPS para ubicar la zona');
+        });
+
+
+
+
+
+}
+ $scope.buscarAnuncio();
+
+
+
+$scope.getPublis = function(){
+
+     api.getPublicaciones().then(function (events) {
+
+          //$scope.events = events;
+          //$scope.events = events.data.evento;
+          console.log(events);
+          $scope.chats = events.data.publicaciones;
+         // $scope.$broadcast('scroll.infiniteScrollComplete');
+        }).finally(function () {
+
+          
+            $scope.loading = false;
+            $scope.$broadcast('scroll.refreshComplete');
+          
+
+        });
+
+}
+
+//$scope.getPublis();
+
+$scope.$on('$ionicView.enter', function(event, viewData) {
+
+
+$scope.usuarioInfo={};
+  var userData = JSON.parse(window.localStorage.getItem('userInfoSM'));
+
+  $scope.usuarioInfo.id =  userData.id;
+
+
+});
+
+
+$scope.agregarAnuncio = function () {
+
+
+//if( $scope.lugaresLista == 0){
+if( false){
+
+ $ionicLoading.show();
+               //$state.reload();
+               api.getLugares().then(function (events) {
+
+              if(events.data.error == false){
+
+                  console.log('lugaresload');
+                  $scope.lugaresLista=events.data.lugares;
+                  $scope.openModal("nuevoAnuncio.html", "slide-in-up");
+
+
+              }
+              else{
+
+              mensajeAlerta(1, 'Ha ocurrido un error, verifique su conexion a internet');
+
+              }
+              }).finally(function () {
+
+              $ionicLoading.hide();
+               });
+
+
+}
+
+else{
+   $scope.openModal("nuevoAnuncio.html", "slide-in-up");
+}
+
+
+        
+
+
+
+      };
+
+
+
+  function mensajeAlerta(tipo, mensaje){
+    console.log(tipo);
+    var ima ='exclam.png';
+if(tipo==1){
+
+     var customTemplate =
+        '<div style="text-align:center;"><img style="margin-top:10px" src="img/exclam.png"> <p style="    font-size: 18px;color:white; margin-top:25px">'+mensaje+'</p> </div>';
+
+
+}
+  if(tipo == 2){
+
+     var customTemplate =
+        '<div style="text-align:center;"><img style="margin-top:10px" src="img/confirma.png"> <p style="    font-size: 18px;color:white; margin-top:25px">'+mensaje+'</p> </div>';
+
+}
+
+      $ionicPopup.show({
+        template: customTemplate,
+        title: '',
+        subTitle: '',
+        buttons: [{
+          text: 'Cerrar',
+          type: 'button-blueCustom',
+          onTap: function(e) {
+
+    console.log('ok');
+          }
+           // if(borrar){ $scope.user.pin='';}
+           
+          
+        }]
+      });
+
+}
+
+
+
+
+       $scope.openModal = function(templateName,animation) {
+    $ionicModal.fromTemplateUrl(templateName, {
+      scope: $scope,
+      animation: animation
+    }).then(function(modal) {
+      $scope.modal = modal;
+      $scope.modal.show();
+    });
+  };
+
+  $scope.closeModal = function() {
+
+    $scope.foto={};
+    $scope.fotoNombre = 0;
+
+
+    $scope.modal.hide();
+  };
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
+
+
+
+
+    }
+  ]);
+
+
 
 
     app.controller('listaMascotasCtrl', [
@@ -937,7 +1486,15 @@ $scope.registrarAnuncio = function (anuncio) {
 
 
 
-          $ionicLoading.show();
+         // $ionicLoading.show();
+
+          $ionicLoading.show({
+      template: '<ion-spinner icon="bubbles"></ion-spinner><p>Publicando anuncio, esta operacion puede durar hasta 1 min. Por favor, espere</p>'
+      // noBackdrop: true
+    });
+  
+
+
         console.log(anuncio);
 
 

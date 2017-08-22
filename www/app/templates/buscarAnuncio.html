@@ -1,0 +1,204 @@
+<ion-view>
+
+
+
+
+
+
+ <script id="resultadoBusqueda.html" type="text/ng-template">
+  <ion-modal-view class="ion-nifty-modal2">
+    <div  class="ion-modal-content-custom2">
+
+
+      <ion-content class="padding " style="background-color: lightgray; color:#444" >
+
+
+  <i ng-click='closeModal()' style='    color: #444;
+    font-size: 35px;' class=" ion-android-cancel"></i>
+    <div style="    font-size: 17px;
+    margin-top: 12px;
+    margin-bottom: 15px;"  ng-show='chats.length !== 0'>Resultado de la busqueda</div>
+
+    <div class="{{layout}} chat-list-wrap">
+
+
+
+
+
+          <div style='    font-size: 15px;
+    text-align: center;
+    color: #777;
+    margin-top: 20px;'  ng-show='chats.length == 0' > No se han encontrado publicaciones que cumplan con el filtro</div>
+
+
+      <a class="item item-thumbnail-left" ng-repeat="chat in chats" ui-sref="detailPublicacion({id: chat.id})" ng-click='closeModal()'  style="    min-height: 172px; margin-top: 10px;"> 
+        <img ng-src="{{urlImg}}/{{chat.photo}}" style="border-radius: 5%;    border: none;">
+        <h2 style="color:#FF8600; white-space: pre-line !important">{{chat.nombre}}</h2>
+
+         <p style="color:#444 !important; white-space: pre-line !important;    max-height: 44px;">{{chat.descripcion}}</p>
+       
+
+     <div style="white-space: pre-line;"><img style="    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 0px;" src="img/animal{{chat.id_raza}}.png"> {{chat.edad}}</div>
+
+
+        <h2 style="color:#444 !important;"><img style='  border-radius: 0px;  height: 30px; width: 30px;border: none;vertical-align: middle;margin-right: 5px;' src="img/tipoa{{chat.id_tipoanuncio}}.png"><strong>{{chat.tipoAnuncio}}</strong></h2>
+        <div   style="     background-color: lightcoral;
+    position: absolute;
+    left: 7px;
+    top: 0;
+    margin-top: 131px;
+    width: 100px;
+    max-width: 100px;
+    text-align: center;
+    padding: 2px;
+    border-radius: 2px;
+    color: white;">
+         Hace {{chat.tiempoPublicacion}} dias
+        </div>
+      </a>
+    </div>
+    
+
+
+
+ </ion-content>
+    </div>
+  </ion-modal-view>
+</script>
+
+
+
+  <ion-nav-title>Buscar Anuncio</ion-nav-title>
+  <ion-content padding="true" style='background-color:  #00AD9E; color:white'>
+
+
+
+
+
+
+
+                    <div  style='      color: white;
+      margin-top: 15px;font-size: 17px !important;    padding-bottom: 13px;' >Buscar</div>
+
+                    <div  class="list " >
+
+
+              <div  style='       padding: 0px;
+    background-color: transparent;
+   border-bottom: 0px !important;' class="bar bar-header item-input-inset">
+              <label class="item-input-wrapper">
+              <i class="icon ion-ios-search placeholder-icon"></i>
+              <input type="search" placeholder="Busqueda por palabra" ng-model='filtro.palabra'>
+              </label>
+              <button  style="color: white;
+    border: solid 1px;
+    padding: 4px;" class="button button-clear" ng-click='busquedaAnuncio(filtro)'>
+              Buscar
+              </button>
+              </div>
+
+
+
+
+                        <div  style="margin-top:25px; border-bottom:1px solid white"><label style="    color: white;
+    font-size: 17px !important;">Filtro avanzado</label></div>
+                       
+
+
+                       <div style="margin-top:30px"><label style="    color: white;
+    font-size: 17px !important;">Tipo de anuncio</label></div>
+
+    <select ng-model='filtro.tipoAnuncio'  style="    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: white;" required="required">
+
+    <!--   <option ng-repeat='l in lugares' ng-value='l.idLugar' >{{l.nombre}}</option> -->
+     <option ng-value='1' >Encontrado</option>
+      <option  ng-value='2' >Perdido</option>
+      <option  ng-value='3' >Se regalan</option>
+    </select>
+
+
+
+                       <div style="margin-top:13px"><label style="    color: white;
+    font-size: 17px !important;">Distancia</label></div>
+
+    <select ng-model='filtro.distancia'  style="    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: white;" ng-disabled="!gpsActivo">
+
+    <!--   <option ng-repeat='l in lugares' ng-value='l.idLugar' >{{l.nombre}}</option> -->
+     <option ng-value='10' >10km</option>
+      <option  ng-value='50' >50km</option>
+      <option  ng-value='70' >70km</option>
+    </select>
+
+
+
+                       <div style="margin-top:13px"><label style="    color: white;
+    font-size: 17px !important;">Tipo Mascota</label></div>
+
+    <select ng-model='filtro.tipoMascota'  style="    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: white;" required="required">
+
+    <!--   <option ng-repeat='l in lugares' ng-value='l.idLugar' >{{l.nombre}}</option> -->
+     <option ng-value='1' >Perro</option>
+      <option  ng-value='2' >Gato</option>
+      <option  ng-value='3' >Otro</option>
+    </select>
+
+
+
+                       <div style="margin-top:13px"><label style="    color: white;
+    font-size: 17px !important;">Fecha</label></div>
+
+    <select ng-model='filtro.fecha'  style="    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: white;" required="required">
+
+    <!--   <option ng-repeat='l in lugares' ng-value='l.idLugar' >{{l.nombre}}</option> -->
+     <option ng-value='7' >Ultima semana</option>
+      <option  ng-value='30' >Ultimo mes</option>
+      <option  ng-value='180' >Ultimos 6 meses</option>
+    </select>
+
+
+<!--    <div style="margin-top:13px"><label style="    color: white;
+    font-size: 17px !important;">Lugar</label></div>
+
+    <select ng-model='anuncio.lugar'  style="    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: white;" required="required">
+
+       <option ng-repeat='l in lugaresLista' ng-value='l.codigoInterno' >{{l.nombre}}</option>
+ 
+    </select> -->
+
+
+
+
+                    </div>
+
+                         
+       
+
+   
+        
+      </div> 
+
+
+
+  
+  </ion-content>
+</ion-view>
+
+
