@@ -342,17 +342,18 @@
 
 
 
-    <div ng-controller='publiCtrl' ng-show='publicidadActiva' style="     width: 100%;
-    position: absolute;
-    bottom: 0px;
-    max-height: 27%;
-    height: 27% !important;
-    z-index: 5;" >
+    <div ng-controller='publiCtrl' ng-show='publicidadActiva' style=" width: 100%;
+position: absolute;
+bottom: 0px;
+max-height: 27%;
+z-index: 5;
+background-color: lightgray;
+text-align: center;" >
       
       <img style='    width: 95%;
-    bottom: 0;
-    z-index: 15;
-    margin-left: 2.5%;'   ng-click='goPubli()' ng-src="{{urlImg}}/{{imagenPublicidad.imagen}}" ng-src="">
+bottom: 0;
+z-index: 15;
+max-width: 500px;'   ng-click='goPubli()' ng-src="{{urlImg}}/{{imagenPublicidad.imagen}}" ng-src="">
 
     <i ng-click='cerrarPubli()' style='position: absolute;
     top: -7px;
