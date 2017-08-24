@@ -833,6 +833,7 @@ $ionicLoading.show();
       $scope.loading = true;
 
 
+  $scope.filtro= {} ;
 
 $scope.foto={};
 $scope.fotoNombre = 0;
@@ -858,9 +859,9 @@ $scope.fotoNombre = 0;
 
 
 
-  $scope.limpiarFiltro = function(filtro){
+  $scope.limpiarFiltro = function(){
 
-    $scope.filtro = {};
+    $scope.filtro= {} ;
     console.log($scope.filtro);
   }
 
