@@ -855,6 +855,15 @@ $scope.fotoNombre = 0;
   };
 
 
+
+
+
+  $scope.limpiarFiltro = function(filtro){
+
+    $scope.filtro = {};
+    console.log($scope.filtro);
+  }
+
   $scope.busquedaAnuncio = function(filtro){
 
 
@@ -876,7 +885,7 @@ if(filtro == 'undefined' ||
        filtro.palabra == ' ' || 
        filtro.palabra == ''){
 
-      filtro.palabra = 420;
+      filtro.palabra = '';
 
     }
 

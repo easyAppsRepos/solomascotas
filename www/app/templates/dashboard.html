@@ -18,7 +18,7 @@
        <form name="form.anuncio" ng-submit="form.anuncio.$valid && registrarEvento(anuncio)">
 
                     <div  style='      color: white;
-   border-bottom: solid 1px #1cb382;    margin-top: 15px;font-size: 17px !important;    padding-bottom: 13px;' >Crear Evento</div>
+   border-bottom: solid 1px #1cb382;    margin-top: 15px;font-size: 17px !important;    padding-bottom: 13px;' >Crear Campaña</div>
                     <div  class="list " >
 
                         <div  style="margin-top:13px"><label style="    color: white;
@@ -52,7 +52,7 @@
 
 
                        <div style="margin-top:13px"><label style="    color: white;
-    font-size: 17px !important;">Tipo de evento</label></div>
+    font-size: 17px !important;">Tipo de campaña</label></div>
 
     <select ng-model='anuncio.tipoEvento'  style="    margin-top: 10px;
     margin-bottom: 10px;
@@ -89,7 +89,7 @@
           </ion-nav-buttons>
 
 
-  <ion-nav-title>Eventos </ion-nav-title>
+  <ion-nav-title>Campañas </ion-nav-title>
   <ion-content padding="true" style='color:#444'>
       <ion-refresher class="spinner-balanced" on-refresh="loadNext()"></ion-refresher>
       
@@ -121,7 +121,7 @@
       <!-- <button class="button button-balanced button-block" ng-disabled="form.search.$invalid"><b>Buscar</b></button> -->
     </form>
 
-    <h3 style="color:#444"><span>Eventos programados</span></h3>
+    <h3 style="color:#444"><span>Campañas programadas</span></h3>
     <ion-list>
       <ion-item class="item-icon-right item-avatar item-royal" ui-sref="detail({id: event.idEvento})" ng-repeat="event in events | filter:{ descripcion: search.string } | filter:{ nombre: search.string } track by event.idEvento  | limitTo:limit">
         <img ng-src="img/campana{{event.tipoEvento}}.png">

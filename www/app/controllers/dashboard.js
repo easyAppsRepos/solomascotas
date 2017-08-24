@@ -382,7 +382,7 @@ if(tipo==1){
 
 
 
-                 mensajeAlerta(2, 'Evento agregado correctamente');
+                 mensajeAlerta(2, 'Campaña agregada correctamente');
 
                  $scope.closeModal();
 
@@ -390,7 +390,7 @@ if(tipo==1){
               }
               else{
 
-              mensajeAlerta(1, 'Ha ocurrido un error, no se ha podido agregar el evento');
+              mensajeAlerta(1, 'Ha ocurrido un error, no se ha podido agregar ');
 
               }
               }).finally(function () {

@@ -103,8 +103,8 @@
 
 
 
-                        <div  style="margin-top:25px; border-bottom:1px solid white"><label style="    color: white;
-    font-size: 17px !important;">Filtro avanzado</label></div>
+                        <div  style="    height: 43px;margin-top:25px; border-bottom:1px solid white"><label style="    color: white;
+    font-size: 17px !important;">Filtro avanzado</label>  <button ng-click='limpiarFiltro()' style="float: right;" class="button button-small">Limpiar filtro</button></div>
                        
 
 
@@ -117,6 +117,7 @@
     color: white;" required="required">
 
     <!--   <option ng-repeat='l in lugares' ng-value='l.idLugar' >{{l.nombre}}</option> -->
+   
      <option ng-value='1' >Encontrado</option>
       <option  ng-value='2' >Perdido</option>
       <option  ng-value='3' >Se regalan</option>
@@ -133,6 +134,7 @@
     color: white;" ng-disabled="!gpsActivo">
 
     <!--   <option ng-repeat='l in lugares' ng-value='l.idLugar' >{{l.nombre}}</option> -->
+
      <option ng-value='10' >10km</option>
       <option  ng-value='50' >50km</option>
       <option  ng-value='70' >70km</option>
@@ -149,6 +151,7 @@
     color: white;" required="required">
 
     <!--   <option ng-repeat='l in lugares' ng-value='l.idLugar' >{{l.nombre}}</option> -->
+    
      <option ng-value='1' >Perro</option>
       <option  ng-value='2' >Gato</option>
       <option  ng-value='3' >Otro</option>
@@ -165,6 +168,7 @@
     color: white;" required="required">
 
     <!--   <option ng-repeat='l in lugares' ng-value='l.idLugar' >{{l.nombre}}</option> -->
+   
      <option ng-value='7' >Ultima semana</option>
       <option  ng-value='30' >Ultimo mes</option>
       <option  ng-value='180' >Ultimos 6 meses</option>
