@@ -1308,6 +1308,39 @@ if(filtro == 'undefined' ||
 
  }
 
+
+
+ $scope.getPosition = function(){
+
+
+$ionicLoading.show();
+
+    navigator.geolocation.getCurrentPosition(function(pos) {
+
+                 var latitudePerson = pos.coords.latitude;
+                  var longitudePerson = pos.coords.longitude;
+
+                  window.localStorage.setItem("latSM", latitudePerson);
+                  window.localStorage.setItem("lonSM", longitudePerson);
+                  $ionicLoading.hide();
+
+                  return true;
+
+
+          }, function(error) {
+
+
+            $ionicLoading.hide();
+            return false;
+       
+          });
+
+
+}
+
+
+
+
  $scope.openLink = function(link){
     $window.open('http://solomascotas.cl/registro/terminos.pdf', '_system');
  }
@@ -1358,7 +1391,14 @@ $ionicLoading.show();
 
 $scope.getPublis = function(){
 
-     api.getPublicaciones().then(function (events) {
+$ionicLoading.show();
+
+  if(localStorage.getItem("latSM") && localStorage.getItem("lonSM") && localStorage.getItem("latSM") !== 'undefined' && localStorage.getItem("lonSM")!== 'undefined' ){
+console.log(' lat');
+
+    var dd = {lat:localStorage.getItem("latSM"),lon:localStorage.getItem("lonSM")}
+
+           api.getPublicaciones(dd).then(function (events) {
 
           //$scope.events = events;
           //$scope.events = events.data.evento;
@@ -1370,9 +1410,77 @@ $scope.getPublis = function(){
           
             $scope.loading = false;
             $scope.$broadcast('scroll.refreshComplete');
-          
+            $ionicLoading.hide();
 
         });
+
+
+
+
+  }
+  else{
+
+    navigator.geolocation.getCurrentPosition(function(pos) {
+
+                 var latitudePerson = pos.coords.latitude;
+                  var longitudePerson = pos.coords.longitude;
+
+                  window.localStorage.setItem("latSM", latitudePerson);
+                  window.localStorage.setItem("lonSM", longitudePerson);
+                //  $ionicLoading.hide();
+
+                    var dd = {lat:latitudePerson,lon:longitudePerson}
+
+           api.getPublicaciones(dd).then(function (events) {
+
+          //$scope.events = events;
+          //$scope.events = events.data.evento;
+          console.log(events);
+          $scope.chats = events.data.publicaciones;
+         // $scope.$broadcast('scroll.infiniteScrollComplete');
+        }).finally(function () {
+
+          
+            $scope.loading = false;
+            $scope.$broadcast('scroll.refreshComplete');
+            $ionicLoading.hide();
+
+        });
+
+
+          }, function(error) {
+
+
+         var dd = {lat:null,lon:null}
+
+           api.getPublicaciones(dd).then(function (events) {
+
+          //$scope.events = events;
+          //$scope.events = events.data.evento;
+          console.log(events);
+          $scope.chats = events.data.publicaciones;
+         // $scope.$broadcast('scroll.infiniteScrollComplete');
+        }).finally(function () {
+
+          
+            $scope.loading = false;
+            $scope.$broadcast('scroll.refreshComplete');
+            $ionicLoading.hide();
+            mensajeAlerta(1,'Debes activar el GPS para obtener la ubicacion');
+
+        });
+
+
+            //$ionicLoading.hide();
+            return false;
+       
+          });
+
+
+
+  }
+
+
 
 }
 
@@ -1388,6 +1496,22 @@ $scope.usuarioInfo={};
 
 
 });
+
+
+
+
+
+$scope.getDistannce = function (distance) {
+
+  if(distance){
+    return distance+'km aprox';
+  }
+  else{
+    return 'No especificado';
+  }
+
+
+}
 
 
 $scope.agregarAnuncio = function () {
@@ -1667,6 +1791,8 @@ var ft = new FileTransfer();
         }).finally(function () {
           $scope.$broadcast('scroll.refreshComplete');
         });*/
+        $scope.getPosition();
+        
         $scope.getPublis();
 
 

@@ -13,9 +13,11 @@ app.factory('api', function($http, $q, $window, serverConfig) {
       
 
 
-getPublicaciones:function(){  
+getPublicaciones:function(dd){  
 
-            return  $http.post(serverConfig.url+'/getPublicaciones')
+  console.log(dd);
+
+            return  $http.post(serverConfig.url+'/getPublicaciones', dd)
             .then(function(response) {
             console.log(response);
             return response;
