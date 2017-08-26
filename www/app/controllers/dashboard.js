@@ -58,6 +58,20 @@ cerrarPublicacion:function(idUser){
             return response;
             });
         },
+guardarConf:function(idUser){  
+
+            return  $http.post(serverConfig.url+'/guardarConf',idUser)
+            .then(function(response) {
+            console.log(response);
+            return response;
+            }, function(response) {
+            // something went wrong
+            console.log('error');
+             console.log(response);
+
+            return response;
+            });
+        },
 
 
 
@@ -384,7 +398,7 @@ if(tipo==1){
 
 
 
-                 mensajeAlerta(2, 'Campaña agregada correctamente');
+                 mensajeAlerta(2, 'Campaña agregada correctamente, debe ser aprobada por el administrador para mostrarse');
 
                  $scope.closeModal();
 

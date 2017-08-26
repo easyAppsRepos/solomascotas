@@ -94,6 +94,14 @@ $ionicConfigProvider.backButton.previousTitleText(false).text('');
           controller: 'contactanosCtrl'
         })
 
+           .state('notificaciones', {
+          url: '/notificaciones',
+          templateUrl: 'app/templates/notificaciones.html',
+          controller: 'contactanosCtrl'
+        })
+
+
+
 
       .state('configuracion', {
           url: '/configuracion',

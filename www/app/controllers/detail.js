@@ -186,7 +186,17 @@ $scope.getPublicidad();
         if(distancia){ 
           return (Math.round(distancia) + ' km');
           }
-        else{ return 'No definido'}
+        else{ 
+
+          if(distancia == 0){
+            return '0km';
+          }
+          else{
+            return 'No definido';
+          }
+          
+
+        }
       }
         
 
@@ -315,12 +325,15 @@ $ionicLoading.show();
 
                   window.localStorage.setItem("latSM", latitudePerson);
                   window.localStorage.setItem("lonSM", longitudePerson);
+                  $ionicLoading.hide();
 
                   return true;
 
 
           }, function(error) {
 
+
+            $ionicLoading.hide();
             return false;
        
           });
@@ -386,7 +399,7 @@ var dataComentario = {
       $scope.reload = function () {
 
 
-        $scope.getPosition();
+        //$scope.getPosition();
 
 
       };
@@ -434,12 +447,15 @@ var dataComentario = {
     '$stateParams',
     '$window',
     '$ionicPopup',
+    '$ionicLoading',
     'eventService',
     'api',
     'serverConfig',
-    function ($scope, $stateParams, $window, $ionicPopup, eventService, api, serverConfig) {
+    function ($scope, $stateParams, $window, $ionicPopup, $ionicLoading, eventService, api, serverConfig) {
 
       $scope.loading = true;
+
+      $scope.configuracion = {};
 
       $scope.openPage = function(link){
 
@@ -449,6 +465,84 @@ var dataComentario = {
       window.open(link, '_system', 'location=yes'); return false;
 
   }  
+}
+
+
+
+
+      $scope.guardarConfiguracion = function(confi){
+
+$ionicLoading.show();
+        var userData = JSON.parse(window.localStorage.getItem('userInfoSM'));
+
+
+        confi.idUsuario = userData.id;
+        confi.vigencia = confi.vigencia || 0;
+        confi.tipoAnuncio = confi.tipoAnuncio || 0;
+        confi.tipoMascota = confi.tipoMascota || 0;
+
+        console.log(confi);
+
+                 api.guardarConf(confi).then(function (events) {
+
+                  console.log(events);
+          //$scope.events = events;
+          //$scope.events = events.data.evento;
+         // console.log(events);
+          //$scope.chats = events.data.publicaciones;
+           //$ionicLoading.hide();
+         // $scope.$broadcast('scroll.infiniteScrollComplete');
+        }).finally(function () {
+
+
+            $scope.loading = false;
+              $ionicLoading.hide();
+               if(events.data.error) {mensajeAlerta(1, 'Ha ocurrido un error');}
+                else{mensajeAlerta(2, 'Configuracion guardada');}
+            
+
+        });
+
+
+      }
+
+
+
+
+  function mensajeAlerta(tipo, mensaje){
+    console.log(tipo);
+    var ima ='exclam.png';
+if(tipo==1){
+
+     var customTemplate =
+        '<div style="text-align:center;"><img style="margin-top:10px" src="img/exclam.png"> <p style="    font-size: 18px;color:white; margin-top:25px">'+mensaje+'</p> </div>';
+
+
+}
+  if(tipo == 2){
+
+     var customTemplate =
+        '<div style="text-align:center;"><img style="margin-top:10px" src="img/confirma.png"> <p style="    font-size: 18px;color:white; margin-top:25px">'+mensaje+'</p> </div>';
+
+}
+
+      $ionicPopup.show({
+        template: customTemplate,
+        title: '',
+        subTitle: '',
+        buttons: [{
+          text: 'Cerrar',
+          type: 'button-blueCustom',
+          onTap: function(e) {
+
+    console.log('ok');
+          }
+           // if(borrar){ $scope.user.pin='';}
+           
+          
+        }]
+      });
+
 }
 
 
@@ -1507,7 +1601,12 @@ $scope.getDistannce = function (distance) {
     return distance+'km aprox';
   }
   else{
-    return 'No especificado';
+              if(distance == 0 ){
+            return '0km';
+          }
+          else{
+            return 'No definido';
+          }
   }
 
 

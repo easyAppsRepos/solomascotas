@@ -1,0 +1,70 @@
+<ion-view>
+  <ion-nav-title>Notificaciones</ion-nav-title>
+  <ion-content padding="true" style='color:#444'>
+
+  <div style="text-align:center">Seleccione las Opciones de Notificaciones que seran enviadas a su correo . Ejemplo : Tipos de Anuncio . 
+  <br>  <br>
+USTED RECIBIRA EN SU CORREO LOS ANUNCIOS FILTRADOS POR ESTA CONFIGURACION</div>
+ <br>
+
+<div style="margin-top:13px"><label style="    color: #444;
+    font-size: 17px !important;">Tipo Anuncio</label></div>
+    <select ng-model='configuracion.tipoAnuncio'  style="    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #444;" required="required">
+
+    <!--   <option ng-repeat='l in lugares' ng-value='l.idLugar' >{{l.nombre}}</option> -->
+   
+     <option ng-value='0' ng-selected='true'>-</option>
+     <option ng-value='1' >Encontrado</option>
+      <option  ng-value='2' >Perdido</option>
+      <option  ng-value='3' >Se regalan</option>
+    </select>
+
+
+
+
+
+
+
+                       <div style="margin-top:13px"><label style="    color: #444;
+    font-size: 17px !important;">Tipo Mascota</label></div>
+
+    <select ng-model='configuracion.tipoMascota'  style="    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #444;" required="required">
+
+    <!--   <option ng-repeat='l in lugares' ng-value='l.idLugar' >{{l.nombre}}</option> -->
+      <option ng-value='0' ng-selected='true'>-</option>
+     <option ng-value='1' >Perro</option>
+      <option  ng-value='2' >Gato</option>
+      <option  ng-value='3' >Otro</option>
+    </select>
+
+
+
+
+
+                       <div style="margin-top:13px"><label style="    color: #444;
+    font-size: 17px !important;">Vigencia</label></div>
+
+    <select ng-model='configuracion.vigencia'  style="    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #444;" required="required">
+
+    <!--   <option ng-repeat='l in lugares' ng-value='l.idLugar' >{{l.nombre}}</option> -->
+     <option ng-value='0' ng-selected='true'>-</option>
+      <option ng-value='7' >Ultima semana</option>
+      <option  ng-value='30' >Ultimo mes</option>
+      <option  ng-value='180' >Ultimos 6 meses</option>
+    </select>
+<br>
+
+    <button style="margin-top:20px" class="button" ng-click='guardarConfiguracion(configuracion)'>Guardar Configuracion</button>
+  </ion-content>
+</ion-view>
+
+
