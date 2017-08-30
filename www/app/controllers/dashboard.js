@@ -348,6 +348,8 @@ $scope.usuarioInfo={};
 
       };
 
+$scope.loadNext();
+
   function mensajeAlerta(tipo, mensaje){
     console.log(tipo);
     var ima ='exclam.png';
